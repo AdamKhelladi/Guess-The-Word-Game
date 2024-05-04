@@ -298,6 +298,7 @@ footer span:hover {
     font-size: 14px;
   }
   .container .guess-game {
+    padding: 10px;
     .game-area {
       .inputs {
         .style-tryDiv {
@@ -310,8 +311,8 @@ footer span:hover {
           > div {
             input {
               margin: 0 3px 10px;
-              width: 22px;
-              height: 22px;
+              width: 28px;
+              height: 28px;
               font-size: 15px;
             }
           } 
