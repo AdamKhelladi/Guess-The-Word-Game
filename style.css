@@ -300,7 +300,7 @@ footer span:hover {
   .container .guess-game {
     .game-area {
       .inputs {
-        .style-div {
+        .style-tryDiv {
           flex-direction: column;
           gap: 10px;
           margin-bottom: 10px;
