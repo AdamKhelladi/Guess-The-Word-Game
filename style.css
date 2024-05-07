@@ -115,7 +115,7 @@ body {
       gap: 10px;
       margin-top: 40px;
       .check, 
-      .hint {
+      .hints {
         padding: 15px;
         border-radius: 6px;
         color: white;
@@ -133,11 +133,11 @@ body {
         background-color: var(--hover-color);
         box-shadow: 0 0 3px #111 inset;
       }
-      .hint {
+      .hints {
         background-color: #444;
         user-select: none;
       }
-      .hint:hover {
+      .hints:hover {
         background-color: #333;
         box-shadow: 0 0 3px #111 inset;
       }
@@ -194,12 +194,10 @@ body {
   display: none;
   span {
     display: block;
-    font-size: 25px;
+    font-size: 23px;
+    font-weight: 700;
     color: var(--hover-color);
     text-transform: capitalize;
-  }
-  p {
-    margin-top: 15px;
   }
 }
 
@@ -232,32 +230,6 @@ footer span:hover {
   color: var(--hover-color);
 }
 
-/* .result {
-  margin: 10px auto;
-  background-color: black;
-  padding: 20px;
-  border-radius: 6px;
-  border: 2px solid var(--main-color);
-
-  display: none;
-}
-
-.result .popup {
-  width: fit-content;
-  margin: 0 auto;
-  background-color: #fd0000;
-  padding: 15px 20px;
-  color: #ececec;
-  font-size: 22px;
-  font-weight: 600;
-  border-radius: 6px;
-}
-
-.result .popup span {
-  color: white;
-  font-weight: 700;
-} */
-
 .again {
   width: fit-content;
   padding: 12px 17px;
@@ -282,7 +254,6 @@ footer span:hover {
   footer {
     font-size: 13px;
   }
-  
   .container .guess-game {
     flex-direction: column;
     gap: 20px;
@@ -298,7 +269,7 @@ footer span:hover {
     font-size: 14px;
   }
   .container .guess-game {
-    padding: 10px;
+    padding: 20px 10px;
     .game-area {
       .inputs {
         .style-tryDiv {
@@ -330,6 +301,3 @@ footer span:hover {
     padding: 15px 25px;
   }
 }
-
-
-
