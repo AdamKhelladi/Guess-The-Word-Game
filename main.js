@@ -241,6 +241,7 @@ function winMsg() {
 }
 
 function loseMsg() {
+  document.querySelector("#fail").play();
   msg.style.display = "block";
   msg.innerHTML = `Game Over. The Word Is <span>[ ${wordToGuess} ]</span>`;
   msg.style.color = "red";
