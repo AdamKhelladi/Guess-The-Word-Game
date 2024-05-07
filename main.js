@@ -2,6 +2,8 @@
 
 let gameName = "Guess The Word";
 let msg = document.querySelector(".msg");
+let hintsBtn = document.querySelector(".hints");
+let hintsSpan = document.querySelector(".hints span");
 
 addGameName();
 window.onload = function () {
@@ -9,8 +11,8 @@ window.onload = function () {
 };
 
 let numberOfTries = 5;
-let numberOfLetters = 6;
 let currentIndex = 1;
+let numberofHints = 2;
 
 let wordToGuess = "";
 const words = [
@@ -24,7 +26,76 @@ const words = [
   "Framework",
 ];
 wordToGuess = words[Math.floor(Math.random() * words.length)].toLowerCase();
-numberOfLetters = wordToGuess.length;
+let numberOfLetters = wordToGuess.length;
+
+let guessBtn = document.querySelector(".check");
+guessBtn.addEventListener("click", () => {
+  console.log(wordToGuess);
+  let successGuess = true;
+
+  for (let i = 1; i <= numberOfLetters; i++) {
+    const inputField = document.querySelector(
+      `#guess-${currentIndex}-letter-${i}`
+    );
+    const letter = inputField.value.toLowerCase();
+    const actualLetter = wordToGuess[i - 1];
+
+    if (letter === actualLetter) {
+      inputField.classList.add("in-place");
+    } else if (wordToGuess.includes(letter) && letter != "") {
+      inputField.classList.add("not-in-place");
+      successGuess = false;
+    } else if (!wordToGuess.includes(letter) && letter != "") {
+      inputField.classList.add("no");
+      successGuess = false;
+    } else {
+      successGuess = false;
+    }
+  }
+
+  if (successGuess) {
+    winMsg();
+    playAgian();
+
+    let allTries = document.querySelectorAll(".inputs .style-tryDiv");
+    allTries.forEach((tryDiv) => tryDiv.classList.add("disabled-input"));
+
+    disabledGuessBtn();
+    disabledHintsBtn();
+  } else {
+    manageDisable();
+  }
+});
+
+hintsSpan.innerHTML = numberofHints;
+hintsBtn.addEventListener("click", () => {
+  if (numberofHints > 0) {
+    numberofHints--;
+    hintsSpan.innerHTML = numberofHints;
+  }
+
+  if (numberofHints === 0) {
+    disabledHintsBtn();
+  }
+
+  let enabledInputs = document.querySelectorAll("input:not([disabled])");
+  let emptyEnabledInputs = Array.from(enabledInputs).filter(
+    (input) => input.value === ""
+  );
+
+  if (emptyEnabledInputs.length > 0) {
+    const randomInput =
+      emptyEnabledInputs[Math.floor(Math.random() * emptyEnabledInputs.length)];
+
+    const indexToFill = Array.from(enabledInputs).indexOf(randomInput);
+
+    if (indexToFill !== -1) {
+      randomInput.value = wordToGuess[indexToFill].toUpperCase();
+    }
+  }
+});
+
+document.addEventListener("keydown", handleBackspace);
 
 function generateInput() {
   const inputsContainer = document.querySelector(".inputs");
@@ -93,44 +164,84 @@ function toUpperCaseAndFocusNext() {
   });
 }
 
-const guessBtn = document.querySelector(".check");
-guessBtn.addEventListener("click", () => {
-  console.log(wordToGuess);
-  let successGuess = true;
+function manageDisable() {
+  document
+    .querySelector(`.try-${currentIndex}`)
+    .classList.add("disabled-input");
 
-  for (let i = 1; i <= numberOfLetters; i++) {
-    const inputField = document.querySelector(`#guess-${currentIndex}-letter-${i}`);
-    const letter = inputField.value.toLowerCase();
-    const actualLetter = wordToGuess[i - 1];
+  let currentTryInputs = document.querySelectorAll(
+    `.try-${currentIndex} > div input`
+  );
+  currentTryInputs.forEach((input) => {
+    input.disabled = true;
+  });
 
-    if (letter === actualLetter) {
-      inputField.classList.add("in-place");
-    } else if (wordToGuess.includes(letter) && letter != "") {
-      inputField.classList.add("not-in-place");
-      successGuess = false;
-    } else if (!wordToGuess.includes(letter) && letter != "") {
-      inputField.classList.add("no");
-      successGuess = false;
-    } else {
-      successGuess = false;
+  let divTries = document.querySelectorAll(".style-tryDiv");
+  if (currentIndex < divTries.length) {
+    currentIndex++;
+
+    let nextTryInputs = document.querySelectorAll(
+      `.try-${currentIndex} > div input`
+    );
+    nextTryInputs.forEach((input, index) => {
+      input.disabled = false;
+      index === 0 ? input.focus() : input;
+    });
+
+    document
+      .querySelector(`.try-${currentIndex}`)
+      .classList.remove("disabled-input");
+  } else {
+    disabledGuessBtn();
+    disabledHintsBtn();
+
+    loseMsg();
+    playAgian();
+  }
+}
+
+function handleBackspace(event) {
+  if (event.key === "Backspace") {
+    const inputs = document.querySelectorAll("input:not([disabled])");
+    const currentInputIndex = Array.from(inputs).indexOf(document.activeElement);
+    
+    if (currentInputIndex > 0) {
+      let currentInput = inputs[currentInputIndex];
+      let prevInput = inputs[currentInputIndex - 1];
+
+      currentInput.value = "";
+      prevInput.value = "";
+      prevInput.focus();
     }
   }
+}
 
-  if (successGuess) {
-    msg.style.display = "block";
-    msg.innerHTML = "Congratulations, You're doing great!";
+function disabledGuessBtn() {
+  guessBtn.disabled = true;
+  guessBtn.addEventListener("mouseout", function () {
+    guessBtn.style.backgroundColor = "var(--main-color)";
+    guessBtn.style.boxShadow = "0 0 0 white";
+    guessBtn.style.opacity = "0.5";
+  });
+}
 
-    playAgian();
+function disabledHintsBtn() {
+  hintsBtn.disabled = true;
+  hintsBtn.style.backgroundColor = "#444";
+  hintsBtn.style.boxShadow = "0 0 0 white";
+  hintsBtn.style.opacity = "0.5";
+}
 
-    let allTries = document.querySelectorAll(".inputs .style-tryDiv");
-    allTries.forEach((tryDiv) => tryDiv.classList.add("disabled-input"));
+function winMsg() {
+  msg.style.display = "block";
+  msg.innerHTML = "Congratulations, You're doing great!";
+}
 
-    guessBtn.disabled = true;
-  } else {
-    console.log("You Lose.");
-  }
-});
-
+function loseMsg() {
+  msg.style.display = "block";
+  msg.innerHTML = `Game Over. The Word Is <span>[ ${wordToGuess} ]</span>`;
+  msg.style.color = "red";
+}
 
 function playAgian() {
   let playAgainBtn = document.createElement("div");
@@ -141,5 +252,57 @@ function playAgian() {
 
   playAgainBtn.addEventListener("click", () => {
     location.reload();
-  })
+  });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// End Guess Word Game
