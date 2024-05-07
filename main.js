@@ -203,8 +203,10 @@ function manageDisable() {
 function handleBackspace(event) {
   if (event.key === "Backspace") {
     const inputs = document.querySelectorAll("input:not([disabled])");
-    const currentInputIndex = Array.from(inputs).indexOf(document.activeElement);
-    
+    const currentInputIndex = Array.from(inputs).indexOf(
+      document.activeElement
+    );
+
     if (currentInputIndex > 0) {
       let currentInput = inputs[currentInputIndex];
       let prevInput = inputs[currentInputIndex - 1];
@@ -233,6 +235,7 @@ function disabledHintsBtn() {
 }
 
 function winMsg() {
+  document.querySelector("#success").play();
   msg.style.display = "block";
   msg.innerHTML = "Congratulations, You're doing great!";
 }
