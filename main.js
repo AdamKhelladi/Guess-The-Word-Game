@@ -15,6 +15,7 @@ let currentIndex = 1;
 let numberofHints = 2;
 
 let wordToGuess = "";
+// Game Words
 const words = [
   "Web",
   "Algorithm",
@@ -32,7 +33,7 @@ let guessBtn = document.querySelector(".check");
 guessBtn.addEventListener("click", () => {
   console.log(wordToGuess);
   let successGuess = true;
-
+  
   for (let i = 1; i <= numberOfLetters; i++) {
     const inputField = document.querySelector(
       `#guess-${currentIndex}-letter-${i}`
