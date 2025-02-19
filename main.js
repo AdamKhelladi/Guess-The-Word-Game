@@ -15,6 +15,7 @@ let currentIndex = 1;
 let numberofHints = 2;
 
 let wordToGuess = "";
+
 // Game Words
 const words = [
   "Web",
