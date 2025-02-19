@@ -98,6 +98,7 @@ hintsBtn.addEventListener("click", () => {
 
 document.addEventListener("keydown", handleBackspace);
 
+// Functions
 function generateInput() {
   const inputsContainer = document.querySelector(".inputs");
 
