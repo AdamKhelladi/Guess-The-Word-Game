@@ -6,6 +6,7 @@ let hintsBtn = document.querySelector(".hints");
 let hintsSpan = document.querySelector(".hints span");
 
 addGameName();
+
 window.onload = function () {
   generateInput();
 };
