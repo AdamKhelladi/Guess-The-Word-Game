@@ -28,6 +28,7 @@ const words = [
   "Backend",
   "Framework",
 ];
+
 wordToGuess = words[Math.floor(Math.random() * words.length)].toLowerCase();
 let numberOfLetters = wordToGuess.length;
 
