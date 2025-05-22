@@ -41,6 +41,7 @@ guessBtn.addEventListener("click", () => {
     const inputField = document.querySelector(
       `#guess-${currentIndex}-letter-${i}`
     );
+    
     const letter = inputField.value.toLowerCase();
     const actualLetter = wordToGuess[i - 1];
 
